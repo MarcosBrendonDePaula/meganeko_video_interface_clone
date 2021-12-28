@@ -1,11 +1,18 @@
 
-const pluss_painel_left_top = document.querySelector(".pluss_painel_left_top")
-const pluss_painel_left_botton = document.querySelector(".pluss_painel_left_bottom")
+const pluss_painel_left_top      = document.querySelector(".pluss_painel_left_top")
+const pluss_painel_left_botton   = document.querySelector(".pluss_painel_left_bottom")
 const pluss_painel_middle_botton = document.querySelector(".pluss_painel_middle_bottom")
 const pluss_painel_right_top     = document.querySelector(".pluss_painel_right_top")
 const pluss_painel_right_botton  = document.querySelector(".pluss_painel_right_botton")
 
 const intern_square              = document.querySelector(".intern_square")
+
+const title_info                 = document.querySelector(".Title_Info")
+
+var audio                        = document.getElementById('audio');
+
+var selected_music = 0
+var volume         = 1
 
 const Painels = [
     pluss_painel_left_top,
@@ -14,6 +21,7 @@ const Painels = [
     pluss_painel_right_top,
     pluss_painel_right_botton
 ];
+
 /*Animation controller*/
 (()=>{
 
@@ -50,7 +58,6 @@ const Painels = [
     window.AudioContext = window.AudioContext || window.webkitAudioContext || window.mozAudioContext;
 
     var start = function() {
-        var audio = document.getElementById('audio');
         var ctx = new AudioContext();
         var analyser = ctx.createAnalyser();
         var audioSrc = ctx.createMediaElementSource(audio);
@@ -122,10 +129,9 @@ const Painels = [
         }
 
     })
-    audio.src = music_src
+    audio.src = musics[selected_music].music_src
     audio.volume = 0.1
     audio.onplay = function(){
-
         start();
     };
 })();
@@ -176,4 +182,32 @@ const Painels = [
         randomBlurLoop()
     },1)
 })();
+
+/*Music Selector*/
+(()=>{
+
+    document.addEventListener("keyup",(event)=>{
+
+        if(event.key == "ArrowLeft") {
+            if(selected_music-1 < 0) {
+                selected_music = musics.length-1
+            }else
+                selected_music-=1
+        } else if(event.key == "ArrowRight") {
+            if(selected_music > musics.length-1) {
+                selected_music = 0
+            }else
+                selected_music+=1
+        }
+        audio.src = musics[selected_music].music_src
+        update()
+    })
+
+    function update() {
+        title_info.querySelector("h1").innerText =  musics[selected_music].title
+        title_info.style.fontSize = musics[selected_music].font_size
+
+    }
+
+})()
 
