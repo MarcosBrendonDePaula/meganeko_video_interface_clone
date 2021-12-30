@@ -194,7 +194,7 @@ const Painels = [
             }else
                 selected_music-=1
         } else if(event.key == "ArrowRight") {
-            if(selected_music > musics.length-1) {
+            if(selected_music+1 > musics.length-1) {
                 selected_music = 0
             }else
                 selected_music+=1
@@ -205,7 +205,8 @@ const Painels = [
 
     function update() {
         title_info.querySelector("h1").innerText =  musics[selected_music].title
-        title_info.style.fontSize = musics[selected_music].font_size
+        title_info.querySelector("h1").style.fontSize = musics[selected_music].font_size
+        document.querySelector(".music_title").textContent = musics[selected_music].music_title
     }
 
 })()

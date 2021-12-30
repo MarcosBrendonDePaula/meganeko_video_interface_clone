@@ -54,16 +54,35 @@ html,body {
 
 .middle_info {
     position: fixed;
+
     width: 50vw;
+    height: 25vh;
+
     top: 35vh;
     left: 23vw;
+
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
     z-index: 10;
+    /*animation: middle_info_expand_animation infinite 30s linear;*/
 }
 
+@keyframes middle_info_expand_animation {
+    0% {
+        width: 50vw;
+        height: 25vh;
+    }
+    50% {
+        width: 51vw;
+        height: 26vh;
+    }
+    100% {
+        width: 50vw;
+        height: 25vh;
+    }
+}
 
 .container_info {
     width: 100%;
@@ -73,21 +92,37 @@ html,body {
 }
 
 .Title_Info h1{
-    font-size: 91px;
-    color: white;
+    font-size: 7em;
+    color: beige;
     margin: 0;
+    text-shadow: 1px 1px;
 }
 
 .canvas_container {
+    margin: 0;
+    margin-top: -10%;
+    position: relative;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 10;
+    left: 7vw;
+}
+
+.canvas_container .music_title {
+    position: relative;
+    top: -1vh;
+    color: beige;
+    font-family: Roboto;
+    font-weight: bold;
+    font-size: 2em;
+    margin-left: 0.5vw;
+    text-shadow: 2px 1px;
 }
 
 #canvas {
-    width: 80%;
+    width: 70%;
     height: 5vh;
     transform: rotate(180deg);
     z-index: 30;
@@ -104,6 +139,7 @@ html,body {
     left: 31vw;
     paint-order: stroke;
     animation: octagon_rotate infinite 360s linear;
+    opacity: 0.8;
 }
 
 @keyframes octagon_rotate {
@@ -139,6 +175,7 @@ html,body {
     top: 17.8vh;
     left: 36.8vw;
     /*animation: intern_square_rotate infinite 20s;*/
+    opacity: 0.8;
 }
 
 @keyframes intern_square_rotate {
