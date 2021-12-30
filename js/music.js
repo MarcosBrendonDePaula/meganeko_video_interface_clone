@@ -7,7 +7,7 @@ var musics = [
         'music_title'   : "Daydreamer",
         'thumbnail_src' : "images/meganeko&fantom.jpg",
         'font'          : "SiegraRegular",
-        'font_size'     : "50px"
+        'font_size'     : "90px"
     },
     {
         'title'         : "meganeko & FantomenK",

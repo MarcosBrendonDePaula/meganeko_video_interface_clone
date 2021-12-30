@@ -55,38 +55,53 @@ html,body {
 .middle_info {
     position: fixed;
     width: 50vw;
-    top: 28%;
-    left: 23%;
+    top: 35vh;
+    left: 23vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    z-index: 10;
+}
+
+
+.container_info {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Title_Info h1{
+    font-size: 91px;
+    color: white;
+    margin: 0;
+}
+
+.canvas_container {
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 10;
 }
 
+#canvas {
+    width: 80%;
+    height: 5vh;
+    transform: rotate(180deg);
+    z-index: 30;
+}
+
 .Icon_image {
     height: 8vw;
 }
 
-.Title_Info {
-    font-size: 50px;
-    color: white;
-}
-
-#canvas {
-    position: fixed;
-    transform: rotate(180deg);
-    top: 50%;
-    left: 32%;
-    z-index: 30;
-    width: 35vw;
-    height: 10vh;
-}
-
 .scene_octagon {
-    height: 80%;
+    height: 81vh;
     position: fixed;
-    top: 5%;
-    left: 31%;
+    top: 5vh;
+    left: 31vw;
     paint-order: stroke;
     animation: octagon_rotate infinite 360s linear;
 }
@@ -111,18 +126,18 @@ html,body {
 .intern_octagon {
     height: 65%;
     position: fixed;
-    top: 12.3%;
-    left: 34.8%;
+    top: 12.3vh;
+    left: 35.2vw;
     transform: rotate(15deg)
 }
 
 .intern_square {
     width: 26vw;
     height: 26vw;
-    border: 10px solid white;
+    border: 8px solid white;
     position: fixed;
-    top: 16.6%;
-    left: 36.4%;
+    top: 17.8vh;
+    left: 36.8vw;
     /*animation: intern_square_rotate infinite 20s;*/
 }
 
@@ -235,8 +250,8 @@ html,body {
     height: 5vh;
     position: absolute;
     flex-wrap: wrap;
-    top: 70%;
-    left: 49.8%;
+    top: 70vh;
+    left: 49.8vw;
 }
 
 .pluss_painel_middle_bottom .pluss {
@@ -249,8 +264,8 @@ html,body {
     height: 5vh;
     position: absolute;
     flex-wrap: wrap;
-    top: 10%;
-    left: 63.3%;
+    top: 10vh;
+    left: 63.3vw;
 }
 .pluss_painel_right_top .pluss{
     width: 20%;
@@ -263,8 +278,8 @@ html,body {
     height: 5vh;
     position: absolute;
     flex-wrap: wrap;
-    top: 75%;
-    left: 70.3%;
+    top: 75vh;
+    left: 70.3vw;
 }
 
 .pluss_painel_right_botton .pluss{
@@ -284,7 +299,7 @@ html,body {
     position: fixed;
     width: 40vw;
     height: 90vh;
-    top: -5%;
-    left: 28%;
+    top: -5vh;
+    left: 28vw;
     z-index: 2;
 }

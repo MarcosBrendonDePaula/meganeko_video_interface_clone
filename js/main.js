@@ -140,7 +140,7 @@ const Painels = [
 
     const scene_octagon = document.querySelector(".scene_octagon")
     var applied_Blur = 0
-    var max_blur     = 10
+    var max_blur     = 5
     var step_blur    = 0.3
     var update_delay = 50
 
@@ -171,7 +171,7 @@ const Painels = [
 
     function randomBlurLoop () {
         setTimeout(()=>{
-            if(applied_Blur == 0) {
+            if(applied_Blur <= 0) {
                 incrementBlur()
             }
             randomBlurLoop()
@@ -206,7 +206,6 @@ const Painels = [
     function update() {
         title_info.querySelector("h1").innerText =  musics[selected_music].title
         title_info.style.fontSize = musics[selected_music].font_size
-
     }
 
 })()
