@@ -88,6 +88,14 @@ const Painels = [
             var step = Math.round(array.length / meterNum); //sample limited data from the total array
             ctx.clearRect(0, 0, cwidth, cheight);
             let size = 0
+            let media = 0
+
+            for (var i = 0; i < meterNum; i++) {
+                let value = array[i * step];
+                media+=value
+            }
+            media = media/meterNum
+
             for (var i = 0; i < meterNum; i++) {
                 var value = array[i * step];
                 if (capYPositionArray.length < Math.round(meterNum)) {
@@ -106,8 +114,9 @@ const Painels = [
                 if(i > meterNum/2)
                     size += value*i
                 else
-                    size += value/1.5
+                    size += (value/1.5)
             }
+            size += media
             //(size/meterNum)
             intern_octagon_rotate_deg += (size/(meterNum*200))
             if(intern_octagon_rotate_deg >= 360) {
