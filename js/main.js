@@ -22,6 +22,8 @@ const Painels = [
     pluss_painel_right_botton
 ];
 
+var fps = 1000;
+
 /*Animation controller*/
 (()=>{
 
@@ -52,12 +54,12 @@ const Painels = [
 })();
 /*Audio controller*/
 (()=>{
-
     var intern_octagon_rotate_deg = 0;
     var played = false
     window.AudioContext = window.AudioContext || window.webkitAudioContext || window.mozAudioContext;
 
     var start = function() {
+
         var ctx = new AudioContext();
         var analyser = ctx.createAnalyser();
         var audioSrc = ctx.createMediaElementSource(audio);
@@ -81,8 +83,13 @@ const Painels = [
         gradient.addColorStop(1, '#fff');
         gradient.addColorStop(0.5, '#fff');
         gradient.addColorStop(0, '#fff');
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
         // loop
-        function renderFrame() {
+        async function renderFrame() {
             var array = new Uint8Array(analyser.frequencyBinCount);
             analyser.getByteFrequencyData(array);
             var step = Math.round(array.length / meterNum); //sample limited data from the total array
@@ -97,7 +104,7 @@ const Painels = [
             media = media/meterNum
 
             for (var i = 0; i < meterNum; i++) {
-                var value = array[i * step];
+                let value = array[i * step];
                 if (capYPositionArray.length < Math.round(meterNum)) {
                     capYPositionArray.push(value);
                 };
@@ -117,15 +124,26 @@ const Painels = [
                     size += (value/1.5)
             }
             size += media
-            //(size/meterNum)
+
             intern_octagon_rotate_deg += (size/(meterNum*200))
             if(intern_octagon_rotate_deg >= 360) {
                 intern_octagon_rotate_deg = 0
             }
             intern_square.style.transform = 'rotate('+intern_octagon_rotate_deg+'deg)'
-            requestAnimationFrame(renderFrame);
+
         }
-        renderFrame();
+
+
+
+        function animate() {
+            renderFrame()
+            setTimeout(() => {
+                requestAnimationFrame(animate);
+            }, 1000 / fps);
+        }
+
+        animate();
+
     };
 
     document.addEventListener("click",()=>{
