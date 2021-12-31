@@ -21,7 +21,11 @@ html,body {
     display: none;
 }
 
-@media (max-width: 1360px) {
+@media (max-width: 1000px) {
+	.scene{
+		filter: blur(5px);
+	}
+	
     /*Alerta de rotação*/
     .rotate_alert {
         position: fixed;
