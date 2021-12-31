@@ -22,7 +22,7 @@ const Painels = [
     pluss_painel_right_botton
 ];
 
-var fps = 1000;
+var fps = 60;
 
 /*Animation controller*/
 (()=>{
@@ -88,27 +88,22 @@ var fps = 1000;
             return new Promise(resolve => setTimeout(resolve, ms));
         }
 
-        // loop
-        async function renderFrame() {
-            var array = new Uint8Array(analyser.frequencyBinCount);
+        function animate() {
+            let array = new Uint8Array(analyser.frequencyBinCount);
             analyser.getByteFrequencyData(array);
-            var step = Math.round(array.length / meterNum); //sample limited data from the total array
+            let step = Math.round(array.length / meterNum); //sample limited data from the total array
             ctx.clearRect(0, 0, cwidth, cheight);
             let size = 0
             let media = 0
 
-            for (var i = 0; i < meterNum; i++) {
+            for (let i = 0; i < meterNum; i++) {
                 let value = array[i * step];
                 media+=value
-            }
-            media = media/meterNum
-
-            for (var i = 0; i < meterNum; i++) {
-                let value = array[i * step];
                 if (capYPositionArray.length < Math.round(meterNum)) {
                     capYPositionArray.push(value);
                 };
                 ctx.fillStyle = capStyle;
+
                 //draw the cap, with transition effect
                 if (value < capYPositionArray[i]) {
                     ctx.fillRect(i * 12, cheight - (--capYPositionArray[i]), meterWidth, capHeight);
@@ -117,33 +112,28 @@ var fps = 1000;
                     capYPositionArray[i] = value;
                 };
                 ctx.fillStyle = gradient; //set the filllStyle to gradient for a better look
-                ctx.fillRect(i * 12 /*meterWidth+gap*/ , cheight - value + capHeight, meterWidth, cheight); //the meter
+                ctx.fillRect(i * 12 , cheight - value + capHeight, meterWidth, cheight); //the meter
+
                 if(i > meterNum/2)
                     size += value*i
                 else
-                    size += (value/1.5)
+                    size += (value/2)
             }
+
+            media = media/meterNum
             size += media
 
-            intern_octagon_rotate_deg += (size/(meterNum*200))
+            intern_octagon_rotate_deg += (size/(meterNum*100))
             if(intern_octagon_rotate_deg >= 360) {
                 intern_octagon_rotate_deg = 0
             }
             intern_square.style.transform = 'rotate('+intern_octagon_rotate_deg+'deg)'
 
-        }
-
-
-
-        function animate() {
-            renderFrame()
             setTimeout(() => {
                 requestAnimationFrame(animate);
             }, 1000 / fps);
         }
-
         animate();
-
     };
 
     document.addEventListener("click",()=>{
