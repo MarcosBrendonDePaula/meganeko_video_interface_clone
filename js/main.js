@@ -67,7 +67,7 @@ var fps = 60;
         audioSrc.connect(analyser);
         analyser.connect(ctx.destination);
 
-        var frequencyData = new Uint8Array(analyser.frequencyBinCount);
+        //var frequencyData = new Uint8Array(analyser.frequencyBinCount);
 
         var canvas = document.getElementById('canvas'),
             cwidth = canvas.width,
@@ -83,10 +83,6 @@ var fps = 60;
         gradient.addColorStop(1, '#fff');
         gradient.addColorStop(0.5, '#fff');
         gradient.addColorStop(0, '#fff');
-
-        function sleep(ms) {
-            return new Promise(resolve => setTimeout(resolve, ms));
-        }
 
         function animate() {
             let array = new Uint8Array(analyser.frequencyBinCount);
@@ -123,7 +119,7 @@ var fps = 60;
             media = media/meterNum
             size += media
 
-            intern_octagon_rotate_deg += (size/(meterNum*100))
+            intern_octagon_rotate_deg += (size/(meterNum*200))
             if(intern_octagon_rotate_deg >= 360) {
                 intern_octagon_rotate_deg = 0
             }
@@ -136,7 +132,7 @@ var fps = 60;
         animate();
     };
 
-    document.addEventListener("click",()=>{
+    document.querySelector(".container").addEventListener("click",()=>{
         if (played) {
             audio.pause()
             played = false
@@ -147,6 +143,7 @@ var fps = 60;
 
     })
     audio.src = musics[selected_music].music_src
+    document.querySelector("#player").src = "http://www.youtube.com/embed/"+musics[selected_music].yt_id+"?enablejsapi=1"
     audio.volume = 0.1
     audio.onplay = function(){
         start();
@@ -224,7 +221,46 @@ var fps = 60;
         title_info.querySelector("h1").innerText =  musics[selected_music].title
         title_info.querySelector("h1").style.fontSize = musics[selected_music].font_size
         document.querySelector(".music_title").textContent = musics[selected_music].music_title
+        document.querySelector("#player").src = "http://www.youtube.com/embed/"+musics[selected_music].yt_id+"?enablejsapi=1"
     }
 
-})()
+})();
+
+//config painel
+(()=>{
+
+    const config_btn_img = document.querySelector(".config_btn_img")
+    const fps_input = document.querySelector(".fps_input")
+    const volume_input = document.querySelector(".volume_input")
+    const yt_view_input = document.querySelector(".yt_view_input")
+
+    volume_input.value = audio.volume
+
+
+    config_btn_img.addEventListener("click",()=>{
+        let painel = document.querySelector(".config_painel_view")
+        painel.classList.toggle("hidden")
+        painel.classList.toggle("expand_bottom")
+    })
+
+    const audio_speed_input = document.querySelector(".audio_speed_input")
+    audio_speed_input.value = 100
+
+    fps_input.addEventListener("change", (event)=>{
+        fps = parseInt(event.target.value)
+    })
+
+    volume_input.addEventListener("change", (event)=>{
+        audio.volume = parseInt(event.target.value)*0.01
+    })
+
+    audio_speed_input.addEventListener("change", (event)=>{
+        audio.playbackRate = parseInt(event.target.value)*0.01
+    })
+
+    yt_view_input.addEventListener("change",()=>{
+        document.querySelector(".yt_video").classList.toggle("hidden")
+    })
+
+})();
 

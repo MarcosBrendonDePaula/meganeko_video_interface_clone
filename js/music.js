@@ -16,7 +16,7 @@ var musics = [
         'music_title'   : "is this ok?",
         'thumbnail_src' : "images/meganeko&fantom.jpg",
         'font'          : "SiegraRegular",
-        'font_size'     : "2.5em"
+        'font_size'     : "2.2em"
     },
 
 
