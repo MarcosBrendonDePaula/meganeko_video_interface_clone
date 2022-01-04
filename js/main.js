@@ -143,7 +143,7 @@ var fps = 60;
 
     })
     audio.src = musics[selected_music].music_src
-    document.querySelector("#player").src = "http://www.youtube.com/embed/"+musics[selected_music].yt_id+"?enablejsapi=1"
+    document.querySelector("#player").src = "https://www.youtube.com/embed/"+musics[selected_music].yt_id+"?enablejsapi=1"
     audio.volume = 0.1
     audio.onplay = function(){
         start();
