@@ -221,8 +221,9 @@ var fps = 60;
         title_info.querySelector("h1").innerText =  musics[selected_music].title
         title_info.querySelector("h1").style.fontSize = musics[selected_music].font_size
         document.querySelector(".music_title").textContent = musics[selected_music].music_title
-        document.querySelector("#player").src = "http://www.youtube.com/embed/"+musics[selected_music].yt_id+"?enablejsapi=1"
-    }
+        document.querySelector("#player").src = "https://www.youtube.com/embed/"+musics[selected_music].yt_id+"?enablejsapi=1"
+		document.querySelector("#player").contentDocument.location.reload(true)
+	}
 
 })();
 
