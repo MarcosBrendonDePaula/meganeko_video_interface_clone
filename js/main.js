@@ -13,7 +13,7 @@ var audio                        = document.getElementById('audio');
 
 var selected_music = 0
 var volume         = 1
-
+var auto_play      = false
 const Painels = [
     pluss_painel_left_top,
     pluss_painel_left_botton,
@@ -52,6 +52,7 @@ var fps = 60;
         Loop()
     },1)
 })();
+
 /*Audio controller*/
 (()=>{
     var intern_octagon_rotate_deg = 0;
@@ -76,7 +77,7 @@ var fps = 60;
             gap = 5, //gap between meters
             capHeight = 1,
             capStyle = '#fff',
-            meterNum = 800 / (10 + 12), //count of the meters
+            meterNum = 800 / 22, //count of the meters
             capYPositionArray = []; ////store the vertical position of hte caps for the preivous frame
         ctx = canvas.getContext('2d'),
             gradient = ctx.createLinearGradient(0, 0, 0, 300);
@@ -85,8 +86,11 @@ var fps = 60;
         gradient.addColorStop(0, '#fff');
 
         function animate() {
+            if(!played)
+                return
             let array = new Uint8Array(analyser.frequencyBinCount);
             analyser.getByteFrequencyData(array);
+
             let step = Math.round(array.length / meterNum); //sample limited data from the total array
             ctx.clearRect(0, 0, cwidth, cheight);
             let size = 0
@@ -128,6 +132,7 @@ var fps = 60;
             setTimeout(() => {
                 requestAnimationFrame(animate);
             }, 1000 / fps);
+        
         }
         animate();
     };
@@ -142,11 +147,16 @@ var fps = 60;
         }
 
     })
+
     audio.src = musics[selected_music].music_src
     document.querySelector("#player").src = "https://www.youtube.com/embed/"+musics[selected_music].yt_id+"?enablejsapi=1"
     audio.volume = 0.1
     audio.onplay = function(){
+        played = true
         start();
+    };
+    audio.onpause = function () {
+        played = false
     };
 })();
 /*Random Blur scene octagon controller*/
@@ -222,9 +232,33 @@ var fps = 60;
         title_info.querySelector("h1").style.fontSize = musics[selected_music].font_size
         document.querySelector(".music_title").textContent = musics[selected_music].music_title
         document.querySelector("#player").src = "https://www.youtube.com/embed/"+musics[selected_music].yt_id+"?enablejsapi=1"
-		document.querySelector("#player").contentDocument.location.reload(true)
+		//document.querySelector("#player").contentDocument.location.reload(true)
 	}
 
+
+    const auto_play_input = document.querySelector(".auto_play_input")
+
+    let auto_function = ()=>{
+        if(selected_music+1 > musics.length-1){
+            selected_music = 0;
+        } else
+            selected_music += 1;
+        audio.src = musics[selected_music].music_src
+        update()
+        audio.play()
+    }
+
+    if(auto_play_input.checked) {
+        audio.addEventListener("ended", auto_function)
+    }
+
+    auto_play_input.addEventListener("change",()=>{
+        if(auto_play_input.checked) {
+            audio.addEventListener("ended",auto_function)
+        }else{
+            audio.removeEventListener("ended",auto_function);
+        }
+    })
 })();
 
 //config painel
@@ -236,6 +270,7 @@ var fps = 60;
     const yt_view_input = document.querySelector(".yt_view_input")
 
     volume_input.value = audio.volume
+
 
 
     config_btn_img.addEventListener("click",()=>{

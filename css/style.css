@@ -386,11 +386,10 @@ html,body {
     color: white;
     position: fixed;
     width: 12vw;
-    height: 30vh;
+    height: 35vh;
     z-index: 15;
     left: 5vw;
     top: 4vh;
-
 }
 
 .config_btn {
